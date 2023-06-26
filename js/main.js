@@ -1,4 +1,3 @@
-
 const NAMES = [
   'Маша Спиридонова',
   'Анна Белых',
@@ -51,5 +50,4 @@ const createPost = () => ({
 
 const createPosts = () => Array.from({length: POSTS_COUNT}, createPost);
 
-
-console.log (createPost());
+console.log(createPosts());
