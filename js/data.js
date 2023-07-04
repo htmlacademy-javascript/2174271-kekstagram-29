@@ -50,4 +50,10 @@ const createPost = () => ({
 
 const createPosts = () => Array.from({length: POSTS_COUNT}, createPost);
 
-console.log(createPosts());
+export {getRandomInteger};
+export {getRandomArrayElement};
+export {createComment};
+export {createPost};
+export {createPosts};
+
+console.log (createPosts());
