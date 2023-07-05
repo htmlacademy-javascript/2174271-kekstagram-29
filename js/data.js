@@ -1,3 +1,5 @@
+import { getRandomPositiveInteger, getRandomArrayElement, createIdGenerator } from './util';
+
 const NAMES = [
   'Маша Спиридонова',
   'Анна Белых',
@@ -25,35 +27,40 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const POSTS_COUNT = 25;
+const POSTED_PICTURES = 25;
+const LIKES_MIN = 15;
+const LIKES_MAX = 200;
+const COMMENTS = 15;
+const AVATAR = 6;
 
-let postId = 1;
-let commentId = 1;
+const generateCommentId = createIdGenerator();
 
-const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+const createMessage = () =>
+  Array.from({ length: getRandomPositiveInteger(1, 2) }, () =>
+    getRandomArrayElement(MESSAGES)
+  ).join(' ');
 
 const createComment = () => ({
-  id: commentId++,
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-  message: getRandomArrayElement(MESSAGES),
+  id: generateCommentId(),
+  avatar: `img/avatar-${getRandomPositiveInteger(1, AVATAR)}.svg`,
+  message: createMessage(),
   name: getRandomArrayElement(NAMES),
 });
 
-const createPost = () => ({
-  id: postId,
-  url: `photos/${postId++}.jpg`,
+const createPicture = (index) => ({
+  id: index,
+  url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
-  comments: Array.from({length: getRandomInteger(0, 30)}, createComment),
+  likes: getRandomPositiveInteger(LIKES_MIN, LIKES_MAX),
+  comments: Array.from(
+    { length: getRandomPositiveInteger(0, COMMENTS) },
+    createComment
+  ),
 });
 
-const createPosts = () => Array.from({length: POSTS_COUNT}, createPost);
+const getPictures = () =>
+  Array.from({ length: POSTED_PICTURES }, (_, pictureIndex) =>
+    createPicture(pictureIndex + 1)
+  );
 
-export {getRandomInteger};
-export {getRandomArrayElement};
-export {createComment};
-export {createPost};
-export {createPosts};
-
-console.log (createPosts());
+export { getPictures };
