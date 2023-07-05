@@ -1,4 +1,4 @@
-import { getRandomPositiveInteger, getRandomArrayElement, createIdGenerator } from './util';
+import { getRandomPositiveInteger, getRandomArrayElement, createIdGenerator } from './util.js';
 
 const NAMES = [
   'Маша Спиридонова',
